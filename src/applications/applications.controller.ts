@@ -12,6 +12,7 @@ import {
   ApiResponse,
   ApiBearerAuth,
   ApiHeader,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { ApplicationsService } from './applications.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
@@ -22,15 +23,15 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
 
 @ApiTags('Applications')
-@ApiBearerAuth()
+@ApiBearerAuth('JWT')
+@ApiSecurity('ApiKey')
 @ApiHeader({ name: 'x-api-key', required: true })
-@UseGuards(JwtAuthGuard, ApiKeyGuard)
+@UseGuards(JwtAuthGuard, ApiKeyGuard, RolesGuard)
 @Controller('applications')
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
 
   @Post()
-  @UseGuards(RolesGuard)
   @Roles(Role.CODER)
   @ApiOperation({
     summary: 'Postularse a una vacante (Solo Coder)',
@@ -45,7 +46,6 @@ export class ApplicationsController {
   }
 
   @Get()
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.GESTOR)
   @ApiOperation({ summary: 'Listar todas las postulaciones (Admin/Gestor)' })
   @ApiResponse({ status: 200, description: 'Lista de postulaciones.' })
@@ -54,7 +54,6 @@ export class ApplicationsController {
   }
 
   @Get('me')
-  @UseGuards(RolesGuard)
   @Roles(Role.CODER)
   @ApiOperation({ summary: 'Ver mis postulaciones (Coder)' })
   @ApiResponse({ status: 200, description: 'Mis postulaciones.' })

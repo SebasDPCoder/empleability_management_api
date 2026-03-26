@@ -29,16 +29,17 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const { user } = context.switchToHttp().getRequest();
-
+    const request = context.switchToHttp().getRequest();
+    const { user } = request;
+    
     if (!user) {
-      throw new ForbiddenException('No autenticado.');
+      throw new ForbiddenException('No autenticado o sesión expirada (req.user no encontrado).');
     }
 
     const hasRole = requiredRoles.includes(user.role);
     if (!hasRole) {
       throw new ForbiddenException(
-        `Acceso denegado. Se requiere uno de los siguientes roles: ${requiredRoles.join(', ')}`,
+        `Acceso denegado. Se requiere uno de los siguientes roles: ${requiredRoles.join(', ')}. Tu rol actual es: ${user.role || 'ninguno'}`,
       );
     }
 

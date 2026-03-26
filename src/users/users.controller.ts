@@ -4,7 +4,7 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
-  ApiHeader,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -14,12 +14,12 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
 
 @ApiTags('Users')
-@ApiBearerAuth()
-@ApiHeader({ name: 'x-api-key', required: true })
 @UseGuards(JwtAuthGuard, ApiKeyGuard, RolesGuard)
+@ApiBearerAuth('JWT')
+@ApiSecurity('ApiKey')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Get()
   @Roles(Role.ADMIN)

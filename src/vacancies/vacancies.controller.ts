@@ -17,6 +17,7 @@ import {
   ApiBearerAuth,
   ApiHeader,
   ApiParam,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { VacanciesService } from './vacancies.service';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
@@ -28,15 +29,14 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
 
 @ApiTags('Vacancies')
-@ApiBearerAuth()
-@ApiHeader({ name: 'x-api-key', required: true })
-@UseGuards(JwtAuthGuard, ApiKeyGuard)
+@ApiBearerAuth('JWT')
+@ApiSecurity('ApiKey')
+@UseGuards(JwtAuthGuard, ApiKeyGuard, RolesGuard)
 @Controller('vacancies')
 export class VacanciesController {
   constructor(private readonly vacanciesService: VacanciesService) {}
 
   @Post()
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.GESTOR)
   @ApiOperation({ summary: 'Crear vacante (Admin/Gestor)' })
   @ApiResponse({ status: 201, description: 'Vacante creada exitosamente.' })
@@ -53,7 +53,6 @@ export class VacanciesController {
   }
 
   @Get('all')
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.GESTOR)
   @ApiOperation({ summary: 'Listar todas las vacantes incluyendo inactivas (Admin/Gestor)' })
   findAllIncludingInactive() {
@@ -70,7 +69,6 @@ export class VacanciesController {
   }
 
   @Patch(':id')
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN, Role.GESTOR)
   @ApiOperation({
     summary: 'Actualizar vacante (Admin/Gestor) — incluye activar/inactivar',
@@ -86,7 +84,6 @@ export class VacanciesController {
   }
 
   @Delete(':id')
-  @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)
   @ApiOperation({ summary: 'Eliminar vacante (Solo Admin)' })
   @ApiParam({ name: 'id', type: 'string', format: 'uuid' })

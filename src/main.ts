@@ -41,7 +41,7 @@ async function bootstrap() {
     .setTitle('Empleability Management API')
     .setDescription(
       'API REST para gestión de vacantes de empleabilidad y postulaciones de coders del programa Riwi. ' +
-        '\n\n**Headers requeridos:**\n- `Authorization: Bearer <token>` (JWT)\n- `x-api-key: riwi-api-key-2024`',
+        '\n\n**Headers requeridos:**\n- `Authorization: Bearer <token>` (JWT)\n- `x-api-key: riwi-api-key-2026`',
     )
     .setVersion('1.0')
     .addBearerAuth(

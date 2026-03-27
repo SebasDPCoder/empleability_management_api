@@ -7,69 +7,69 @@
 ![TypeORM](https://img.shields.io/badge/TypeORM-FE0803?style=for-the-badge&logo=typeorm&logoColor=white)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23C0E12F?style=for-the-badge&logo=swagger&logoColor=black)
 
-Sistema de gestión integral para vacantes laborales y postulaciones de coders en el programa **Riwi**. Esta API robusta permite administrar el ciclo de vida de una vacante, desde su publicación hasta el control de cuotas de postulantes, integrando seguridad avanzada y documentación interactiva.
+Comprehensive management system for job vacancies and coder applications within the **Riwi** program. This robust API allows managing the life cycle of a vacancy, from its publication to the control of applicant quotas, integrating advanced security and interactive documentation.
 
 ---
 
-## Características Principales
+## Core Features
 
--   **Gestión de Usuarios**: Soporte para roles de **Admin**, **Gestor** y **Coder**.
--   **Seguridad Avanzada**:
-    -   Autenticación vía **JWT** (JSON Web Tokens).
-    -   Protección adicional mediante **API Key**.
-    -   Hasheo de contraseñas con **Bcrypt**.
--   **Gestión de Vacantes**: CRUD completo, activación/inactivación y filtrado por tecnologías.
--   **Sistema de Postulaciones**: Validación automática de cupos máximos y límites de aplicación.
--   **Infraestructura Moderna**:
-    -   Contenedores con **Docker** y **Docker Compose**.
-    -   Base de Datos PostgreSQL 17.
-    -   **Swagger UI** para documentación y pruebas de API.
--   **Estandarización**: Formato uniforme para todas las respuestas de la API mediante interceptores globales.
+-   **User Management**: Support for **Admin**, **Gestor**, and **Coder** roles.
+-   **Advanced Security**:
+    -   Authentication via **JWT** (JSON Web Tokens).
+    -   Additional protection through **API Key**.
+    -   Password hashing with **Bcrypt**.
+-   **Vacancy Management**: Full CRUD, activation/inactivation, and filtering by technologies.
+-   **Application System**: Automatic validation of maximum quotas and application limits.
+-   **Modern Infrastructure**:
+    -   Containers with **Docker** and **Docker Compose**.
+    -   PostgreSQL 17 Database.
+    -   **Swagger UI** for API documentation and testing.
+-   **Standardization**: Uniform format for all API responses using global interceptors.
 
 ---
 
-## Stack Tecnológico
+## Tech Stack
 
 -   **Framework**: [NestJS](https://nestjs.com/) (Node.js)
--   **Lenguaje**: TypeScript
--   **Base de Datos**: PostgreSQL
+-   **Language**: TypeScript
+-   **Database**: PostgreSQL
 -   **ORM**: TypeORM
--   **Documentación**: Swagger (OpenAPI 3.1)
--   **Contenedores**: Docker & Docker Compose
--   **Pruebas**: Jest
--   **Calidad de Código**: ESLint & Prettier
+-   **Documentation**: Swagger (OpenAPI 3.1)
+-   **Containers**: Docker & Docker Compose
+-   **Testing**: Jest
+-   **Code Quality**: ESLint & Prettier
 
 ---
 
-## ⚙️ Configuración del Entorno
+## Environment Configuration
 
-### 1. Variables de Entorno
+### 1. Environment Variables
 
-Copia el archivo de ejemplo y ajusta los valores necesarios:
+Copy the example file and adjust the necessary values:
 
 ```bash
 cp .env.example .env
 ```
 
-| Variable | Descripción | Valor Ejemplo |
+| Variable | Description | Example Value |
 | :--- | :--- | :--- |
-| `PORT` | Puerto en el que corre la aplicación | `3000` |
-| `DB_HOST` | Host de la base de datos | `localhost` o `db` (Docker) |
-| `DB_PORT` | Puerto de PostgreSQL | `5432` |
-| `DB_USERNAME` | Usuario de la base de datos | `postgres` |
-| `DB_PASSWORD` | Contraseña del usuario | `yourpassword` |
-| `DB_DATABASE` | Nombre de la base de datos | `empleability_db` |
-| `JWT_SECRET` | Clave secreta para firmar tokens | `mi_secreto_super_seguro` |
-| `JWT_EXPIRES_IN`| Tiempo de vida del token | `24h` |
-| `API_KEY` | Clave global para headers | `tu_api_key` |
+| `PORT` | Port the application runs on | `3000` |
+| `DB_HOST` | Database host | `localhost` or `db` (Docker) |
+| `DB_PORT` | PostgreSQL port | `5432` |
+| `DB_USERNAME` | Database user | `postgres` |
+| `DB_PASSWORD` | User password | `yourpassword` |
+| `DB_DATABASE` | Database name | `empleability_db` |
+| `JWT_SECRET` | Secret key for signing tokens | `your_super_secure_secret` |
+| `JWT_EXPIRES_IN`| Token expiration time | `24h` |
+| `API_KEY` | Global key for headers | `your_api_key` |
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Installation and Execution
 
-### Opción A: Con Docker (Recomendado) 🐳
+### Option A: With Docker (Recommended)
 
-Levanta todo el stack (App + DB + PgAdmin) con un solo comando:
+Start the entire stack (App + DB + PgAdmin) with a single command:
 
 ```bash
 docker-compose up --build
@@ -78,62 +78,62 @@ docker-compose up --build
 -   **API**: `http://localhost:3000`
 -   **PgAdmin**: `http://localhost:8080` (User: `admin@admin.com`, Pass: `admin`)
 
-### Opción B: Ejecución Local
+### Option B: Local Execution
 
-1.  **Instalar dependencias**:
+1.  **Install dependencies**:
     ```bash
     npm install
     ```
-2.  **Preparar la Base de Datos**:
-    Asegúrate de tener PostgreSQL corriendo y crea la base de datos definida en tu `.env`.
-3.  **Ejecutar Seeder** (Opcional - Carga datos maestros):
+2.  **Prepare the Database**:
+    Ensure PostgreSQL is running and create the database defined in your `.env`.
+3.  **Run Seeder** (Optional - Loads master data):
     ```bash
     npm run build
     npm run seed
     ```
-4.  **Iniciar**:
+4.  **Start**:
     ```bash
-    # Desarrollo (Hot reload)
+    # Development (Hot reload)
     npm run start:dev
 
-    # Producción
+    # Production
     npm run build
     npm run start:prod
     ```
 
 ---
 
-## 📚 Documentación de la API
+## API Documentation
 
-Accede a la consola interactiva de **Swagger** en:
+Access the **Swagger** interactive console at:
 
 👉 [http://localhost:3000/api](http://localhost:3000/api)
 
-### Seguridad en los Endpoints
+### Endpoint Security
 
-Muchos endpoints requieren autenticación. En Swagger, haz clic en **Authorize** y proporciona:
-1.  **Bearer Token**: El JWT obtenido al loguearse (`/api/auth/login`).
-2.  **API Key**: El valor definido en la variable `API_KEY` de tu entorno.
+Many endpoints require authentication. In Swagger, click **Authorize** and provide:
+1.  **Bearer Token**: The JWT obtained when logging in (`/api/auth/login`).
+2.  **API Key**: The value defined in the `API_KEY` variable of your environment.
 
 ---
 
-## 📂 Estructura del Proyecto
+## Project Structure
 
 ```bash
 src/
-├── applications/   # Gestión de postulaciones y validación de cupos
-├── auth/           # Lógica de seguridad (Guards, Strategies, JWT)
-├── common/         # Decoradores, enums e interceptores de respuesta
-├── database/       # Entidades base y scripts de seeding
-├── users/          # Administración de perfiles y roles (Admin, Gestor, Coder)
-├── vacancies/      # Gestión de vacantes y tecnologías
-├── app.module.ts   # Módulo raíz
-└── main.ts         # Punto de entrada y configuración global
+├── applications/   # Application management and quota validation
+├── auth/           # Security logic (Guards, Strategies, JWT)
+├── common/         # Decorators, enums, and response interceptors
+├── database/       # Base entities and seeding scripts
+├── users/          # Profile and role management (Admin, Gestor, Coder)
+├── vacancies/      # Vacancy and technology management
+├── app.module.ts   # Root module
+└── main.ts         # Entry point and global configuration
 ```
 
 ---
 
-## 🧪 Calidad y Pruebas
+## Quality and Testing
 
 ```bash
 # Unit Tests
@@ -142,7 +142,7 @@ npm run test
 # E2E Tests
 npm run test:e2e
 
-# Cobertura
+# Coverage
 npm run test:cov
 
 # Linter
@@ -151,11 +151,11 @@ npm run lint
 
 ---
 
-## 🛡️ Seguridad y Estandarización
+## Security and Standardization
 
--   **ValidationPipe**: Todos los datos de entrada son validados y transformados automáticamente según los DTOs.
--   **ResponseTransformInterceptor**: Garantiza que el cliente reciba un objeto JSON con estructura `data` y `message` consistente.
--   **RolesGuard**: Control de acceso granular según el rol del usuario autenticado.
+-   **ValidationPipe**: All input data is automatically validated and transformed according to DTOs.
+-   **ResponseTransformInterceptor**: Ensures the client receives a consistent JSON object with `data` and `message` structure.
+-   **RolesGuard**: Granular access control based on the authenticated user's role.
 
 ---
-Generado con ❤️ para el programa SENA/Riwi.
+Generated with ❤️ for the SENA/Riwi program.

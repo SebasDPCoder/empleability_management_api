@@ -1,181 +1,161 @@
 # Empleability Management API
 
-API REST construida con **NestJS**, **TypeORM** y **PostgreSQL** para gestionar vacantes de empleabilidad y postulaciones de coders del programa Riwi.
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![TypeORM](https://img.shields.io/badge/TypeORM-FE0803?style=for-the-badge&logo=typeorm&logoColor=white)
+![Swagger](https://img.shields.io/badge/-Swagger-%23C0E12F?style=for-the-badge&logo=swagger&logoColor=black)
+
+Sistema de gestión integral para vacantes laborales y postulaciones de coders en el programa **Riwi**. Esta API robusta permite administrar el ciclo de vida de una vacante, desde su publicación hasta el control de cuotas de postulantes, integrando seguridad avanzada y documentación interactiva.
 
 ---
 
-## 🧰 Requisitos previos
+## Características Principales
 
-- Node.js >= 18
-- npm >= 9
-- PostgreSQL >= 14
+-   **Gestión de Usuarios**: Soporte para roles de **Admin**, **Gestor** y **Coder**.
+-   **Seguridad Avanzada**:
+    -   Autenticación vía **JWT** (JSON Web Tokens).
+    -   Protección adicional mediante **API Key**.
+    -   Hasheo de contraseñas con **Bcrypt**.
+-   **Gestión de Vacantes**: CRUD completo, activación/inactivación y filtrado por tecnologías.
+-   **Sistema de Postulaciones**: Validación automática de cupos máximos y límites de aplicación.
+-   **Infraestructura Moderna**:
+    -   Contenedores con **Docker** y **Docker Compose**.
+    -   Base de Datos PostgreSQL 17.
+    -   **Swagger UI** para documentación y pruebas de API.
+-   **Estandarización**: Formato uniforme para todas las respuestas de la API mediante interceptores globales.
 
 ---
 
-## ⚙️ Configuración inicial
+## Stack Tecnológico
 
-### 1. Clonar el repositorio
+-   **Framework**: [NestJS](https://nestjs.com/) (Node.js)
+-   **Lenguaje**: TypeScript
+-   **Base de Datos**: PostgreSQL
+-   **ORM**: TypeORM
+-   **Documentación**: Swagger (OpenAPI 3.1)
+-   **Contenedores**: Docker & Docker Compose
+-   **Pruebas**: Jest
+-   **Calidad de Código**: ESLint & Prettier
 
-```bash
-git clone <repo-url>
-cd empleability_management_api
-```
+---
 
-### 2. Instalar dependencias
+## ⚙️ Configuración del Entorno
 
-```bash
-npm install
-```
+### 1. Variables de Entorno
 
-### 3. Configurar variables de entorno
-
-Copia el archivo de ejemplo y ajusta los valores:
+Copia el archivo de ejemplo y ajusta los valores necesarios:
 
 ```bash
 cp .env.example .env
 ```
 
-Edita `.env` con tus datos:
+| Variable | Descripción | Valor Ejemplo |
+| :--- | :--- | :--- |
+| `PORT` | Puerto en el que corre la aplicación | `3000` |
+| `DB_HOST` | Host de la base de datos | `localhost` o `db` (Docker) |
+| `DB_PORT` | Puerto de PostgreSQL | `5432` |
+| `DB_USERNAME` | Usuario de la base de datos | `postgres` |
+| `DB_PASSWORD` | Contraseña del usuario | `yourpassword` |
+| `DB_DATABASE` | Nombre de la base de datos | `empleability_db` |
+| `JWT_SECRET` | Clave secreta para firmar tokens | `mi_secreto_super_seguro` |
+| `JWT_EXPIRES_IN`| Tiempo de vida del token | `24h` |
+| `API_KEY` | Clave global para headers | `tu_api_key` |
 
-```env
-PORT=3000
+---
 
-# Base de datos
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=yourpassword
-DB_DATABASE=empleability_db
+## 🚀 Instalación y Ejecución
 
-# JWT
-JWT_SECRET=your_super_secret_jwt_key
-JWT_EXPIRES_IN=24h
+### Opción A: Con Docker (Recomendado) 🐳
 
-# API Key
-API_KEY=your_api_key_here
-```
-
-### 4. Crear la base de datos en PostgreSQL
-
-```sql
-CREATE DATABASE empleability_db;
-```
-
-### 5. Ejecutar el seeder (datos maestros)
+Levanta todo el stack (App + DB + PgAdmin) con un solo comando:
 
 ```bash
-npm run seed
+docker-compose up --build
 ```
+
+-   **API**: `http://localhost:3000`
+-   **PgAdmin**: `http://localhost:8080` (User: `admin@admin.com`, Pass: `admin`)
+
+### Opción B: Ejecución Local
+
+1.  **Instalar dependencias**:
+    ```bash
+    npm install
+    ```
+2.  **Preparar la Base de Datos**:
+    Asegúrate de tener PostgreSQL corriendo y crea la base de datos definida en tu `.env`.
+3.  **Ejecutar Seeder** (Opcional - Carga datos maestros):
+    ```bash
+    npm run build
+    npm run seed
+    ```
+4.  **Iniciar**:
+    ```bash
+    # Desarrollo (Hot reload)
+    npm run start:dev
+
+    # Producción
+    npm run build
+    npm run start:prod
+    ```
 
 ---
 
-## 🚀 Ejecutar el proyecto
+## 📚 Documentación de la API
+
+Accede a la consola interactiva de **Swagger** en:
+
+👉 [http://localhost:3000/api](http://localhost:3000/api)
+
+### Seguridad en los Endpoints
+
+Muchos endpoints requieren autenticación. En Swagger, haz clic en **Authorize** y proporciona:
+1.  **Bearer Token**: El JWT obtenido al loguearse (`/api/auth/login`).
+2.  **API Key**: El valor definido en la variable `API_KEY` de tu entorno.
+
+---
+
+## 📂 Estructura del Proyecto
 
 ```bash
-# Modo desarrollo (hot-reload)
-npm run start:dev
-
-# Modo normal
-npm run start
-
-# Modo producción (requiere build previo)
-npm run build
-npm run start:prod
+src/
+├── applications/   # Gestión de postulaciones y validación de cupos
+├── auth/           # Lógica de seguridad (Guards, Strategies, JWT)
+├── common/         # Decoradores, enums e interceptores de respuesta
+├── database/       # Entidades base y scripts de seeding
+├── users/          # Administración de perfiles y roles (Admin, Gestor, Coder)
+├── vacancies/      # Gestión de vacantes y tecnologías
+├── app.module.ts   # Módulo raíz
+└── main.ts         # Punto de entrada y configuración global
 ```
-
-La API estará disponible en: `http://localhost:3000`
 
 ---
 
-## 📚 Documentación Swagger
-
-Una vez levantada la app, accede a la documentación interactiva en:
-
-```
-http://localhost:3000/api
-```
-
-Todos los endpoints están documentados con ejemplos de request/response.
-
-### Autenticación en Swagger
-
-Los endpoints protegidos requieren **dos headers simultáneos**:
-
-| Header | Valor |
-|---|---|
-| `Authorization` | `Bearer <token>` (JWT obtenido en `/api/auth/login`) |
-| `x-api-key` | Valor definido en `API_KEY` del `.env` |
-
----
-
-## 🗂️ Módulos disponibles
-
-| Tag | Prefijo | Descripción |
-|---|---|---|
-| **Auth** | `/api/auth` | Registro e inicio de sesión |
-| **Users** | `/api/users` | Gestión de usuarios |
-| **Vacancies** | `/api/vacancies` | Gestión de vacantes |
-| **Applications** | `/api/applications` | Postulaciones a vacantes |
-
----
-
-## 🧪 Pruebas
+## 🧪 Calidad y Pruebas
 
 ```bash
-# Ejecutar todos los unit tests
+# Unit Tests
 npm run test
 
-# Modo watch (re-ejecuta al guardar)
-npm run test:watch
+# E2E Tests
+npm run test:e2e
 
-# Reporte de cobertura
+# Cobertura
 npm run test:cov
 
-# Tests end-to-end
-npm run test:e2e
+# Linter
+npm run lint
 ```
 
 ---
 
-## 🛠️ Scripts disponibles
+## 🛡️ Seguridad y Estandarización
 
-| Script | Descripción |
-|---|---|
-| `npm run start:dev` | Servidor en modo desarrollo con hot-reload |
-| `npm run build` | Compila el proyecto a `/dist` |
-| `npm run start:prod` | Corre el build compilado |
-| `npm run seed` | Inserta datos maestros en la BD |
-| `npm run lint` | Linting con ESLint (auto-fix) |
-| `npm run format` | Formato de código con Prettier |
-| `npm run test` | Unit tests con Jest |
-| `npm run test:cov` | Cobertura de tests |
-| `npm run test:e2e` | Tests end-to-end |
+-   **ValidationPipe**: Todos los datos de entrada son validados y transformados automáticamente según los DTOs.
+-   **ResponseTransformInterceptor**: Garantiza que el cliente reciba un objeto JSON con estructura `data` y `message` consistente.
+-   **RolesGuard**: Control de acceso granular según el rol del usuario autenticado.
 
 ---
-
-## 📁 Estructura del proyecto
-
-```
-src/
-├── auth/               # Autenticación (JWT + API Key)
-│   ├── dto/
-│   ├── guards/
-│   └── strategies/
-├── users/              # Módulo de usuarios
-├── vacancies/          # Módulo de vacantes
-├── applications/       # Módulo de postulaciones
-├── common/             # Interceptores, pipes y utilidades compartidas
-├── database/
-│   └── seeders/        # Scripts de seed para datos maestros
-├── app.module.ts
-└── main.ts
-```
-
----
-
-## 🔐 Seguridad
-
-- **JWT**: tokens de acceso con expiración configurable (`JWT_EXPIRES_IN`).
-- **API Key**: header `x-api-key` requerido en todos los endpoints protegidos.
-- **ValidationPipe global**: valida y transforma todos los DTOs; rechaza propiedades no declaradas.
-- **ResponseTransformInterceptor**: estandariza el formato de todas las respuestas.
+Generado con ❤️ para el programa SENA/Riwi.

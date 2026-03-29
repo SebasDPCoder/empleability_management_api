@@ -19,6 +19,9 @@ const AppDataSource = new DataSource({
   database: configService.get<string>('DB_DATABASE', 'empleability_db'),
   entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
   synchronize: true,
+  extra: {
+    max: 1,
+  },
 });
 
 async function seed() {
@@ -60,35 +63,41 @@ async function seed() {
 
   // 2. Seed Users (Admin, Gestor, Coders)
   console.log('\n🌱 Seed de Usuarios...');
+  const adminPass = await bcrypt.hash('Admin123!', 10);
+  const gestorPass = await bcrypt.hash('Gestor123!', 10);
+  const empleabilidadPass = await bcrypt.hash('Empleabilidad123!', 10);
+  const coderPass = await bcrypt.hash('Password123!', 10);
+  const coder2Pass = await bcrypt.hash('Coder123!', 10);
+
   const seedUsers = [
     {
       name: 'Admin',
       email: 'admin@riwi.io',
-      password: await bcrypt.hash('Admin123!', 10),
+      password: adminPass,
       role: Role.ADMIN,
     },
     {
       name: 'Gestor',
       email: 'gestor@riwi.io',
-      password: await bcrypt.hash('Gestor123!', 10),
+      password: gestorPass,
       role: Role.GESTOR,
     },
     {
       name: 'Gestor Empleabilidad',
       email: 'empleabilidad@riwi.io',
-      password: await bcrypt.hash('Empleabilidad123!', 10),
+      password: empleabilidadPass,
       role: Role.GESTOR,
     },
     {
       name: 'Coder Uno',
       email: 'coder@riwi.io',
-      password: await bcrypt.hash('Password123!', 10),
+      password: coderPass,
       role: Role.CODER,
     },
     {
       name: 'Coder Dos',
       email: 'coder2@riwi.io',
-      password: await bcrypt.hash('Coder123!', 10),
+      password: coder2Pass,
       role: Role.CODER,
     },
   ];

@@ -11,6 +11,16 @@ Comprehensive management system for job vacancies and coder applications within 
 
 ---
 
+## 🚀 Live Deployment
+
+The system is deployed and can be accessed at:
+
+-   **Backend API (Railway)**: [https://empleabilitymanagementapi-production.up.railway.app/api](https://empleabilitymanagementapi-production.up.railway.app/api)
+-   **Frontend Client (Render)**: [https://empleability-management-client.onrender.com](https://empleability-management-client.onrender.com)
+-   **API Documentation (Swagger)**: [https://empleabilitymanagementapi-production.up.railway.app/api](https://empleabilitymanagementapi-production.up.railway.app/api)
+
+---
+
 ## Core Features
 
 -   **User Management**: Support for **Admin**, **Gestor**, and **Coder** roles.

@@ -25,7 +25,6 @@ import { Role } from '../common/enums/role.enum';
 @ApiTags('Applications')
 @ApiBearerAuth('JWT')
 @ApiSecurity('ApiKey')
-@ApiHeader({ name: 'x-api-key', required: true })
 @UseGuards(JwtAuthGuard, ApiKeyGuard, RolesGuard)
 @Controller('applications')
 export class ApplicationsController {

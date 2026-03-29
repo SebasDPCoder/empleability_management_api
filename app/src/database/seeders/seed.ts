@@ -181,15 +181,15 @@ async function seed() {
 
   // 4. Seed Applications (Coders applying to vacancies)
   console.log('\n🌱 Seed de Postulaciones...');
-  const coder1 = userMaps.get('coder1@riwi.io');
+  const coder = userMaps.get('coder@riwi.io');
   const coder2 = userMaps.get('coder2@riwi.io');
   const vacancyFullstack = vacancyMaps.get('Fullstack Developer');
   const vacancyBackend = vacancyMaps.get('Backend NestJS Expert');
 
   const seedApplications = [
-    { userId: coder1.id, vacancyId: vacancyFullstack.id },
+    { userId: coder.id, vacancyId: vacancyFullstack.id },
     { userId: coder2.id, vacancyId: vacancyFullstack.id },
-    { userId: coder1.id, vacancyId: vacancyBackend.id },
+    { userId: coder.id, vacancyId: vacancyBackend.id },
   ];
 
   for (const appData of seedApplications) {

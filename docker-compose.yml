@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: ./app
     container_name: nest_api_app
     ports:
       - "${PORT:-3000}:3000"
@@ -36,19 +36,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - app-network
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: nest_api_pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
     networks:
       - app-network
 

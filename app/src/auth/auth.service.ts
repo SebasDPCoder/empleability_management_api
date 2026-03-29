@@ -70,14 +70,12 @@ export class AuthService {
 
     return {
       message: 'Inicio de sesión exitoso',
-      data: {
-        access_token: this.jwtService.sign(payload),
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
       },
     };
   }

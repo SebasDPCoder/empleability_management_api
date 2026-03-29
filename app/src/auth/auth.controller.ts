@@ -3,7 +3,7 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiHeader,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -12,11 +12,7 @@ import { UseGuards } from '@nestjs/common';
 import { ApiKeyGuard } from './guards/api-key.guard';
 
 @ApiTags('Auth')
-@ApiHeader({
-  name: 'x-api-key',
-  description: 'API Key requerida para todos los endpoints',
-  required: true,
-})
+@ApiSecurity('ApiKey')
 @UseGuards(ApiKeyGuard)
 @Controller('auth')
 export class AuthController {
